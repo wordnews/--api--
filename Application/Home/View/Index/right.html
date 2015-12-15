@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>接口内容</title>
+    <link rel="stylesheet" href="__ROOT__/Public/css/bootstrap.min.css"/>
+
+    <script type="application/javascript" src="__ROOT__/Public/js/jquery.min.js"></script>
+    <script type="application/javascript" src="__ROOT__/Public/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .label-method-GET, .label-method-get {
+            background-color: #4DAB58;
+        }
+        .label-method-POST, .label-method-post {
+            background-color: #CC9900;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xs-12">
+                    <php>
+                        if ($data['method'] == 'get') {
+                            echo "<span class='label label-method-GET' >GET</span>";
+                        } elseif ($data['method'] == 'post') {
+                            echo "<span class='label label-method-POST'>POST</span>";
+                        } else {
+                            echo '';
+                        }
+                    </php>
+                    {$data.title}
+                </div>
+            </div>
+
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xs-12">
+                    <span style="font-weight: bold; font-size: 16px">接口地址：</span>
+                    <pre>{$data.url}</pre>
+                </div>
+            </div>
+
+            <if condition="$data['note']">
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xs-12">
+                    <span style="font-weight: bold; font-size: 16px; color: red">特别说明：</span>
+                    <pre style="color: red">{$data.note}</pre>
+                </div>
+            </div>
+            </if>
+
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xs-12">
+                    <span style="font-weight: bold; font-size: 16px">参数说明：</span>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>参数</th>
+                            <th>类型</th>
+                            <th>是否必填</th>
+                            <th>说明</th>
+                        </tr>
+                        <if condition="$data['data']">
+                        <volist name="data.data" id="val">
+                            <tr>
+                                <td>{$val.param}</td>
+                                <td>{$val.type}</td>
+                                <td><img src="__ROOT__/Public/image/{$val.is_must}.gif" alt=""/></td>
+                                <td>{$val.remark}</td>
+                            </tr>
+                        </volist>
+                        </if>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xs-12">
+                    <span style="font-weight: bold; font-size: 16px">返回说明：</span>
+                    <pre>{$data.return}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
