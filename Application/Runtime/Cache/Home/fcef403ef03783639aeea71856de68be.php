@@ -22,19 +22,10 @@
     </td>
     <td>
         <a tabindex="-1" href="javascript:;" onclick="delThis(this)" class="keyvalueeditor-delete">
-            <img class="deleteButton" src="/postman/Public/image/delete.png">
+            <img class="deleteButton" src="/Online-Api-Document/Public/image/delete.png">
         </a>
     </td>
 </tr>
 <script type="application/javascript">
-$('.param').focus();
-
-/**
- * 删除一个参数列
- * @param obj
- */
-function delThis(obj)
-{
-    $(obj).parent().parent().remove();
-}
+    $('.param').focus();
 </script>

@@ -12,7 +12,8 @@ class IndexController extends Controller
     	header('Content-Type:text/html;charset=utf-8');
     	$app_id = I('app_id', 0, 'intval');
 
-    	if (M('app')->where(array('id' => $app_id))->getField('status') != 1) {
+        $appData = M('app')->where(array('id' => $app_id))->find();
+    	if ($appData['status'] != 1) {
     		exit( '项目接口不存在或被禁止访问！' );
     	}
 
@@ -33,6 +34,7 @@ class IndexController extends Controller
         $this->assign('is_login', $uid ?: 0);
         $this->assign('app_id', $app_id);
         $this->assign('_list', $list);
+        $this->assign('_title', $appData['title']);
         $this->display();
     }
 
@@ -68,11 +70,31 @@ class IndexController extends Controller
 
     /**
      * 加载新增/编辑接口的表单
+     * @param $id
      */
     public function face($id)
     {
         $this->is_login() || exit;
         $this->assign('id', $id);
+        $this->display();
+    }
+
+    /**
+     * 加载编辑的表单
+     * @param $id
+     */
+    public function faces($id)
+    {
+        header('Content-Type:text/html;charset=utf-8');
+
+        $this->is_login() || exit;
+        $data = M('face')->find($id);
+        $data || exit('编辑的接口数据不存在~');
+
+        $data['data'] = $data['data'] ? unserialize($data['data']) : [];
+        $this->assign('data', $data);
+        $this->assign('id', $id);
+        $this->assign('app_id', I('app_id', 0));
         $this->display();
     }
 
@@ -83,30 +105,37 @@ class IndexController extends Controller
     {
         $this->is_login() || exit;
         if (IS_POST) {
+            $app_id = I('app_id');
+            // 组合data集合
+            $data = [];
+            if ($_POST['param'] && is_array($_POST['param'])) {
+                foreach ($_POST['param'] as $key => $val) {
+                    if ($val !== '') {
+                        $data[] = [
+                            'param' => $val,
+                            'type' => $_POST['type'][$key],
+                            'is_must' => $_POST['is_must'][$key],
+                            'remark' => $_POST['remark'][$key]
+                        ];
+                    }
+                }
+            }
+            $_POST['data'] = $data ? serialize($data) : '';
+
             if (($id = I('id', 0, 'intval')) == 0) { // 新增
                 if ($_POST['title'] && $_POST['url']) {
-                    // 组合data集合
-                    $data = [];
-                    if ($_POST['param'] && is_array($_POST['param'])) {
-                        foreach ($_POST['param'] as $key => $val) {
-                            if ($val !== '') {
-                                $data[] = [
-                                    'param' => $val,
-                                    'type' => $_POST['type'][$key],
-                                    'is_must' => $_POST['is_must'][$key],
-                                    'remark' => $_POST['remark'][$key]
-                                ];
-                            }
-                        }
-                    }
-                    $_POST['data'] = $data ? serialize($data) : '';
+
                     M('face')->add($_POST);
                 }
             } else { // 编辑
-
+                unset($_POST['app_id']);
+                if ($_POST['title'] && $_POST['url']) {
+                    M('face')->save($_POST);
+                }
             }
-            $this->redirect('index', array('app_id' => I('app_id')));
+            $this->redirect('index', array('app_id' => $app_id));
         } else {
+            header('Content-Type:text/html;charset=utf-8');
             exit( '不支持的请求方式' . $_SERVER['REQUEST_METHOD'] );
         }
     }
@@ -128,12 +157,14 @@ class IndexController extends Controller
             $this->assign('app_id', I('app_id', 0));
             $this->display();
         } else {
+            header('Content-Type:text/html;charset=utf-8');
             exit( '不支持的请求方式' . $_SERVER['REQUEST_METHOD'] );
         }
     }
 
     /**
      * 登录用户
+     * @param $app_id
      */
     public function formLogin($app_id = null)
     {

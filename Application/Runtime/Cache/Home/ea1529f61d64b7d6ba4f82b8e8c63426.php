@@ -45,6 +45,7 @@
                     <option value="int">int</option>
                     <option value="float">float</option>
                     <option value="file">file</option>
+                    <option value="json">json</option>
                 </select>
             </td>
             <td>
@@ -58,7 +59,7 @@
             </td>
             <td>
                 <a tabindex="-1" href="javascript:;" class="keyvalueeditor-delete">
-                    <!--<img class="deleteButton" src="/postman/Public/image/delete.png">-->
+                    <!--<img class="deleteButton" src="/Online-Api-Document/Public/image/delete.png">-->
                 </a>
             </td>
         </tr>

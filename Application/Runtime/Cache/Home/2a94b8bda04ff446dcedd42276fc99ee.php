@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>接口文档</title>
+    <title><?php echo ((isset($_title) && ($_title !== ""))?($_title): ''); ?>-接口文档</title>
     <link rel="stylesheet" href="/Online-Api-Document/Public/css/bootstrap.min.css"/>
 
     <script type="application/javascript" src="/Online-Api-Document/Public/js/jquery.min.js"></script>
@@ -35,6 +35,7 @@
 <body>
 
 <div class="container">
+    <h2 style="text-align: center; font-weight: bold"><?php echo ($_title); ?></h2>
     <div class="row" style="border: 1px solid #FFCCCC; border-radius: 5px">
         <div class="col-xs-3">
             <?php if ($is_login > 0) { ?>
@@ -66,7 +67,7 @@
                             </h4>
                         </div>
                     </a>
-                    <div id="collapseListGroup<?php echo ($val["id"]); ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading<?php echo ($val["id"]); ?>" aria-expanded="false" style="height: 0px;">
+                    <div id="collapseListGroup<?php echo ($val["id"]); ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading<?php echo ($val["id"]); ?>" aria-expanded="false" style="height: 0;">
                         <ul class="list-group">
                             <?php if($val['_child']): if(is_array($val["_child"])): $i = 0; $__LIST__ = $val["_child"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><a href="<?php echo U('right', array('id' => $v['id']));?>" target="right" style="text-decoration: none">
                                     <li class="list-group-item" style="color: #333333;">
@@ -74,7 +75,12 @@
 
                                         <span style="position: relative; top: 3px;"><?php echo ($v["title"]); ?></span>
                                     </li>
-                                </a><?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                                </a>
+                                    <?php if ($is_login > 0) { ?>
+                                    <a href="javascript:;" onclick="loadFaces(<?php echo ($v["id"]); ?>)" style="float:right; margin-right: 10px; position:relative; top: -28px" data-toggle="modal" data-target="#myModal3">
+                                        编辑
+                                    </a>
+                                    <?php } endforeach; endif; else: echo "" ;endif; endif; ?>
                         </ul>
                     </div><?php endforeach; endif; else: echo "" ;endif; ?>
 
@@ -143,11 +149,21 @@
     </div>
 </div>
 
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content edit-face">
+
+        </div>
+    </div>
+</div>
+
 <script type="application/javascript">
 
 $(function(){
     loadLginForm(); // 加载登录的表单
 });
+
+var app_id = "<?php echo ($app_id); ?>";
 
 var obj = $('.list-group-item');
 obj.click(function(){
@@ -183,10 +199,28 @@ function addParam()
  */
 function loadLginForm()
 {
-    var app_id = "<?php echo ($app_id); ?>";
     $.get("<?php echo U('login');?>", {app_id: app_id}, function(html){
         $('body').append(html);
     });
+}
+
+/**
+ * 加载编辑接口的表单
+ */
+function loadFaces(id)
+{
+    $.get("<?php echo U('faces');?>", {id:id, app_id: app_id}, function(html){
+        $('.edit-face').html(html);
+    });
+}
+
+/**
+ * 删除一个参数列
+ * @param obj
+ */
+function delThis(obj)
+{
+    $(obj).parent().parent().remove();
 }
 
 </script>
