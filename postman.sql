@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2015-12-15 16:15:21
+Date: 2015-12-22 09:59:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,7 @@ CREATE TABLE `listen_face` (
 -- Records of listen_face
 -- ----------------------------
 INSERT INTO `listen_face` VALUES ('1', '0', 'get', '首页', '', '', '', '', '1', '1');
-INSERT INTO `listen_face` VALUES ('2', '1', 'get', '幻灯片', 'http://www.baidu.com', 'a:2:{i:0;a:4:{s:5:\"param\";s:3:\"uid\";s:4:\"type\";s:3:\"int\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:8:\"会员id\";}i:1;a:4:{s:5:\"param\";s:8:\"username\";s:4:\"type\";s:6:\"string\";s:7:\"is_must\";s:2:\"no\";s:6:\"remark\";s:12:\"会员名称\";}}', '啦啦', '渣渣', '1', '1');
+INSERT INTO `listen_face` VALUES ('2', '1', 'get', '幻灯片', 'http://www.baidu.com', 'a:2:{i:0;a:4:{s:5:\"param\";s:3:\"uid\";s:4:\"type\";s:6:\"string\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:8:\"会员id\";}i:1;a:4:{s:5:\"param\";s:8:\"username\";s:4:\"type\";s:6:\"string\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:13:\"会员名称0\";}}', 'daasds', '渣渣', '1', '1');
 INSERT INTO `listen_face` VALUES ('3', '1', 'post', '推荐', 'http://www.hao123.com', 'a:2:{i:0;a:4:{s:5:\"param\";s:3:\"uid\";s:4:\"type\";s:3:\"int\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:8:\"会员id\";}i:1;a:4:{s:5:\"param\";s:8:\"username\";s:4:\"type\";s:6:\"string\";s:7:\"is_must\";s:2:\"no\";s:6:\"remark\";s:12:\"会员名称\";}}', '咋咋', '', '1', '1');
 INSERT INTO `listen_face` VALUES ('4', '0', '', '论坛', '', '', '', '', '1', '1');
 INSERT INTO `listen_face` VALUES ('5', '1', 'get', '测试接口', 'http://www.cqjunlong.com', 'a:2:{i:0;a:4:{s:5:\"param\";s:3:\"uid\";s:4:\"type\";s:3:\"int\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:8:\"会员id\";}i:1;a:4:{s:5:\"param\";s:8:\"username\";s:4:\"type\";s:6:\"string\";s:7:\"is_must\";s:3:\"yes\";s:6:\"remark\";s:12:\"会员账号\";}}', '测试', '', '1', '1');

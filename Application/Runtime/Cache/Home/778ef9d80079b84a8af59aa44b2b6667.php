@@ -105,7 +105,7 @@
 
         <div class="form-group">
             <label for="exampleInputName2" style="color: red">返回说明</label>
-            <textarea name="return" class="form-control" style="max-width: 668px" rows="8"></textarea>
+            <textarea name="return" class="form-control" style="max-width: 668px" rows="8"><?php echo ($data["return"]); ?></textarea>
         </div>
         <input name="id" type="hidden" value="<?php echo ((isset($data["id"]) && ($data["id"] !== ""))?($data["id"]): 0); ?>"/>
 
